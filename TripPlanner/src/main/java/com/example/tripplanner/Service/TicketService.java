@@ -6,6 +6,7 @@ import com.example.tripplanner.Model.Plan;
 import com.example.tripplanner.Model.Ticket;
 import com.example.tripplanner.Model.User;
 import com.example.tripplanner.Repository.AdminRepository;
+import com.example.tripplanner.Repository.PlanRepository;
 import com.example.tripplanner.Repository.TicketRepository;
 import com.example.tripplanner.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
     private final AdminRepository adminRepository;
+    private final PlanRepository planRepository;
 
     public List<Ticket> getAllTicket()
     {
@@ -38,7 +40,7 @@ public class TicketService {
         {
           throw new ApiException("Error,the ticket not found");
         }
-        ticket1.setStatus(ticket.getStatus());
+        ticket1.setRespones(ticket.getRespones());
         ticket1.setMessage(ticket.getMessage());
         ticketRepository.save(ticket1);
     }
@@ -78,6 +80,18 @@ public class TicketService {
         if(admin == null || ticket == null ){ throw new ApiException("Can not assign id not found");}
 
         ticket.setAdmin(admin);
+
+        ticketRepository.save(ticket);
+
+    }
+
+    public void assignPlanToTicket(Integer plan_id , Integer ticket_id){
+        Plan plan = planRepository.findPlanById(plan_id);
+        Ticket ticket = ticketRepository.findTicketById(ticket_id);
+
+        if(plan == null || ticket == null ){ throw new ApiException("Can not assign id not found");}
+
+        ticket.setPlan(plan);
 
         ticketRepository.save(ticket);
 

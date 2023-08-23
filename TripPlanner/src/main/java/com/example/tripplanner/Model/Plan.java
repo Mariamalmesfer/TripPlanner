@@ -7,6 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Setter
 @Getter
 @AllArgsConstructor
@@ -16,6 +18,7 @@ public class Plan {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Integer id;
     private String name;
     private String destination;
@@ -41,6 +44,10 @@ public class Plan {
     @JoinColumn(name = "admin_id",referencedColumnName = "id")
     @JsonIgnore
     private Admin admin;
+
+
+    @OneToMany(cascade = CascadeType.ALL ,mappedBy = "plan")
+    private Set<Ticket> tickets;
 
 
 

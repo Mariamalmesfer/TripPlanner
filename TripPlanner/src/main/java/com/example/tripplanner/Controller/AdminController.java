@@ -3,6 +3,7 @@ package com.example.tripplanner.Controller;
 
 import com.example.tripplanner.ApiResponse.ApiResponse;
 import com.example.tripplanner.Model.Admin;
+import com.example.tripplanner.Model.Plan;
 import com.example.tripplanner.Service.AdminService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,4 +43,29 @@ public class AdminController {
     }
 
 
-}
+    @PutMapping("respoensticket/{ticket_id}/{msg}")
+    public ResponseEntity RespoensTicket(@PathVariable String msg, @PathVariable Integer ticket_id ){
+        adminService.RespoensTicket(ticket_id,msg);
+        return ResponseEntity.status(200).body(new ApiResponse("Response Ticket"));
+    }
+
+    @GetMapping("/getallticket/{admin_id}")
+    public ResponseEntity getallticket(@PathVariable Integer admin_id){
+        return ResponseEntity.status(200).body(adminService.getalladminticket(admin_id));
+    }
+
+    @GetMapping("/getallticketbyuser/{user_id}")
+    public ResponseEntity getallticketbyuser(@PathVariable Integer user_id){
+        return ResponseEntity.status(200).body(adminService.getalluserticket(user_id));
+
+    }
+
+    @PutMapping("/updateplan/{id}")
+    public ResponseEntity updatePlanAfterChanges(@PathVariable Integer id, @RequestBody Plan updatePlan){
+        adminService.updatePlanAfterChanges(id,updatePlan);
+        return ResponseEntity.status(200).body(new ApiResponse("updated")) ;
+    }
+
+
+
+    }

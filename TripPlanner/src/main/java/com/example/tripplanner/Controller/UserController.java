@@ -2,6 +2,7 @@ package com.example.tripplanner.Controller;
 
 ;
 import com.example.tripplanner.ApiResponse.ApiResponse;
+import com.example.tripplanner.Model.Ticket;
 import com.example.tripplanner.Model.User;
 import com.example.tripplanner.Service.UserService;
 import jakarta.validation.Valid;
@@ -46,6 +47,40 @@ public class UserController {
         return ResponseEntity.status(200).body(new ApiResponse("User deleted"));
     }
 
+    @PutMapping("/addnewticket/{user_id}/{admin_id}/{plan_id}")
+    public ResponseEntity addNewTicket(@PathVariable Integer user_id, @PathVariable Integer admin_id, @PathVariable Integer plan_id, @RequestBody @Valid Ticket ticket ){
+        userService.addTicket(user_id,admin_id,plan_id,ticket);
+        return ResponseEntity.status(200).body(new ApiResponse("Ticket added please wait for the response"));
+    }
+
+    @GetMapping("/checkrespoens/{user_id}")
+    public ResponseEntity CheckRespoens(@PathVariable Integer user_id){
+        return ResponseEntity.status(200).body(userService.CheckRespoens(user_id));
+    }
 
 
+    @GetMapping("/getallticket/{user_id}")
+    public ResponseEntity getallticket(@PathVariable Integer user_id){
+        return ResponseEntity.status(200).body(userService.getallticket(user_id));
+    }
+
+
+
+    @GetMapping ("/addplan/{package_id}/{user_id}")
+    public ResponseEntity addplan(@PathVariable Integer package_id, Integer user_id){
+        userService.addplan(package_id,user_id);
+        return ResponseEntity.status(200).body(new ApiResponse("Package added please wait for the response"));
+    }
+
+    @PutMapping("/changstatus/{plan_id}")
+    public ResponseEntity ChangStatusOfPlan( @PathVariable Integer plan_id ){
+        userService.ChangStatusOfPlan(plan_id);
+        return ResponseEntity.status(200).body(new ApiResponse("The status of plan is updated"));
+    }
+
+//    @PostMapping("addplan/pid/uid")
+//    public ResponseEntity addplan (@PathVariable Integer pid,@PathVariable Integer uid){
+//        userService.addplan(pid,uid);
+//        return ResponseEntity.status(200).body(new ApiResponse("The status of plan is updated"));
+//    }
 }
