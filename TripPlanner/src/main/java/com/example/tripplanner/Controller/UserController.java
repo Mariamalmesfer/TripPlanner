@@ -60,27 +60,31 @@ public class UserController {
 
 
     @GetMapping("/getallticket/{user_id}")
-    public ResponseEntity getallticket(@PathVariable Integer user_id){
-        return ResponseEntity.status(200).body(userService.getallticket(user_id));
+    public ResponseEntity getallticketbyid(@PathVariable Integer user_id){
+        return ResponseEntity.status(200).body(userService.getallticketbyid(user_id));
     }
 
 
 
     @GetMapping ("/addplan/{package_id}/{user_id}")
-    public ResponseEntity addplan(@PathVariable Integer package_id, Integer user_id){
+    public ResponseEntity addplan(@PathVariable Integer package_id, @PathVariable Integer user_id){
         userService.addplan(package_id,user_id);
         return ResponseEntity.status(200).body(new ApiResponse("Package added please wait for the response"));
     }
 
-    @PutMapping("/changstatus/{plan_id}")
+    @PostMapping("/changstatus/{plan_id}")
     public ResponseEntity ChangStatusOfPlan( @PathVariable Integer plan_id ){
         userService.ChangStatusOfPlan(plan_id);
         return ResponseEntity.status(200).body(new ApiResponse("The status of plan is updated"));
     }
 
-//    @PostMapping("addplan/pid/uid")
-//    public ResponseEntity addplan (@PathVariable Integer pid,@PathVariable Integer uid){
-//        userService.addplan(pid,uid);
-//        return ResponseEntity.status(200).body(new ApiResponse("The status of plan is updated"));
-//    }
+
+
+
+     @GetMapping("/getallapproveplan/{user_id}")
+    public ResponseEntity getAllApprovePlan(@PathVariable Integer user_id){
+
+        return ResponseEntity.status(200).body(userService.getAllApprovePlan(user_id));
+
+    }
 }

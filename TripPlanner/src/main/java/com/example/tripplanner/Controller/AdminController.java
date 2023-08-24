@@ -43,10 +43,13 @@ public class AdminController {
     }
 
 
+
+
+
     @PutMapping("respoensticket/{ticket_id}/{msg}")
     public ResponseEntity RespoensTicket(@PathVariable String msg, @PathVariable Integer ticket_id ){
         adminService.RespoensTicket(ticket_id,msg);
-        return ResponseEntity.status(200).body(new ApiResponse("Response Ticket"));
+        return ResponseEntity.status(200).body(new ApiResponse("Response Ticket added"));
     }
 
     @GetMapping("/getallticket/{admin_id}")
@@ -63,7 +66,7 @@ public class AdminController {
     @PutMapping("/updateplan/{id}")
     public ResponseEntity updatePlanAfterChanges(@PathVariable Integer id, @RequestBody Plan updatePlan){
         adminService.updatePlanAfterChanges(id,updatePlan);
-        return ResponseEntity.status(200).body(new ApiResponse("updated")) ;
+        return ResponseEntity.status(200).body(new ApiResponse("Plan updated")) ;
     }
 
 

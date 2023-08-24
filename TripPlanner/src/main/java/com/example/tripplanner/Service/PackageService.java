@@ -37,7 +37,9 @@ public class PackageService {
         package1.setDuration(updatePackage.getDuration());
         package1.setCategory(updatePackage.getCategory());
         package1.setHotel(updatePackage.getHotel());
+        package1.setHotelStars(updatePackage.getHotelStars());
         package1.setFlightTicket(updatePackage.getFlightTicket());
+        package1.setNumpersons(updatePackage.getNumpersons());
         package1.setTotalPrice(updatePackage.getTotalPrice());
         packageRepository.save(package1);
     }
@@ -55,19 +57,19 @@ public class PackageService {
 
 
     // Assign User to Package  (Many to Many)
-    public void AssignUserToPackage(Integer pakage_id,Integer user_id){
-        Package package2= packageRepository.findPackageById(pakage_id);
-        User user=userRepository.findUserById(user_id);
-
-        if(package2==null || user==null){
-            throw new ApiException("id not found");
-        }
-        package2.getUsers().add(user);
-        user.getPackageSet().add(package2);
-        packageRepository.save(package2);
-        userRepository.save(user);
-
-    }
+//    public void AssignUserToPackage(Integer pakage_id,Integer user_id){
+//        Package package2= packageRepository.findPackageById(pakage_id);
+//        User user=userRepository.findUserById(user_id);
+//
+//        if(package2==null || user==null){
+//            throw new ApiException("id not found");
+//        }
+//        package2.getUsers().add(user);
+//        user.getPackageSet().add(package2);
+//        packageRepository.save(package2);
+//        userRepository.save(user);
+//
+//    }
 
 
 

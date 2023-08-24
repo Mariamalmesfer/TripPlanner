@@ -40,10 +40,10 @@ public class PackageController {
         return ResponseEntity.status(200).body(new ApiResponse(" Package deleted")) ;
     }
 
-    // Assign User to Package  (Many to Many)
-    @PostMapping("/{user_id}/assign/{package_id}")
-    private ResponseEntity assigncustomertomerchant(@PathVariable Integer user_id,@PathVariable Integer package_id){
-        packageService.AssignUserToPackage(user_id,package_id);
-        return ResponseEntity.status(200).body(new ApiResponse("User assign to package"));
-    }
+//    // Assign User to Package  (Many to Many)
+//    @PostMapping("/{user_id}/assign/{package_id}")
+//    private ResponseEntity assigncustomertomerchant(@PathVariable Integer user_id,@PathVariable Integer package_id){
+//        packageService.AssignUserToPackage(user_id,package_id);
+//        return ResponseEntity.status(200).body(new ApiResponse("User assign to package"));
+//    }
 }

@@ -26,8 +26,6 @@ public class AdminService {
     private final PlanService planService;
 
 
-
-
     public List<Admin> getAllAdmin(){
 
         return adminRepository.findAll();
@@ -62,6 +60,8 @@ public class AdminService {
         adminRepository.delete(OldAdmin);
     }
 
+
+    /////////////////////////////////////////////////////////
 
     public void RespoensTicket(Integer ticket_id,String res){
         Ticket ticket = ticketRepository.findTicketById(ticket_id);

@@ -59,6 +59,8 @@ public class UserService {
         userRepository.delete(OldUser);
     }
 
+
+
     public void addTicket(Integer user_id , Integer admin_id,Integer plan_id, Ticket ticket){
         User OldUser= userRepository.findUserById(user_id);
         Admin OldAdmin= adminRepository.findAdminById(admin_id);
@@ -85,7 +87,19 @@ public class UserService {
 
     }
 
-    public Ticket  CheckRespoens(Integer ticket_id){
+
+    public List<Ticket> getallticketbyid(Integer user_id){
+        User user=userRepository.findUserById(user_id);
+        if (user==null){
+            throw new ApiException("user id not found");
+        }
+        List<Ticket> tickets= ticketRepository.findTicketByUser(user);
+
+        return tickets;
+    }
+
+
+    public String  CheckRespoens(Integer ticket_id){
         Ticket ticket = ticketRepository.findTicketById(ticket_id);
 
         if (ticket==null){
@@ -93,19 +107,10 @@ public class UserService {
         }
         if(ticket.getRespones() == null){  throw new ApiException("No reopens yet");}
 
-        return ticket;
+        return ticket.getRespones();
     }
 
 
-    public List<Ticket> getallticket(Integer user_id){
-        User user=userRepository.findUserById(user_id);
-        if (user==null){
-            throw new ApiException("user id not found");
-        }
-         List<Ticket> tickets= ticketRepository.findTicketByUser(user);
-
-        return tickets;
-    }
 
 
     public void addplan(Integer pakage_id ,Integer user_id){
@@ -122,14 +127,16 @@ public class UserService {
         plan.setDuration(aPackage.getDuration());
         plan.setCategory(aPackage.getCategory());
         plan.setHotel(aPackage.getHotel());
+        plan.setHotelStars(plan.getHotelStars());
         plan.setFlightTicket(aPackage.getFlightTicket());
         plan.setTotalPrice(aPackage.getTotalPrice());
-        plan.setStatus(null);
+        plan.setNumpersons(aPackage.getNumpersons());
+        plan.setStatus("pending");
         planRepository.save(plan);
 
 
-
-        assingtoadd(plan.getId(),user_id,pakage_id);
+        planService.assignPackageToPlan(pakage_id,plan.getId());
+        planService.assignUserToPlan(user_id,plan.getId());
 
 
     }
@@ -141,16 +148,21 @@ public class UserService {
             throw new ApiException("Plan not found");
         }
         plan.setStatus("approve");
+        planRepository.save(plan);
     }
 
 
-    public void assingtoadd(Integer planid, Integer userid, Integer pakage_id){
+    public List<Plan> getAllApprovePlan(Integer user_id) {
+        User user = userRepository.findUserById(user_id);
+        if (user == null) {
+            throw new ApiException("not found");
 
+        }
+        List<Plan> plan = planRepository.findPlanByStatusAndUser("approve", user);
 
-        planService.assignPackageToPlan(pakage_id,planid);
-//        planService.assignUserToPlan(userid,planid);
-
+        return plan;
     }
+
 
 
 

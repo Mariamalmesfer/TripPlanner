@@ -36,9 +36,9 @@ public class User {
     @Email(message = "Invalid email format")
     private String email;
 
-    @ManyToMany
-    @JsonIgnore
-    private Set<Package> packageSet;
+//    @ManyToMany
+//    @JsonIgnore
+//    private Set<Package> packageSet;
 
 
     @OneToMany(cascade = CascadeType.ALL ,mappedBy = "user")
